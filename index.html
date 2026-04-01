@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DeepFace AI Surveillance</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ff00;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Recording dot */
+#rec {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: red;
+  font-size: 18px;
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Video */
+video, canvas {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Info panel */
+#info {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  width: 250px;
+  font-size: 14px;
+}
+
+/* Logs */
+#log {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.95);
+  padding: 10px;
+}
+
+/* Progress */
+#progress-container {
+  width: 60%;
+  height: 15px;
+  border: 1px solid #00ff00;
+  margin: 10px auto;
+}
+#progress {
+  height: 100%;
+  width: 0%;
+  background: #00ff00;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 DeepFace AI Surveillance System</h1>
+<div id="rec">● REC</div>
+
+<div id="progress-container">
+  <div id="progress"></div>
+</div>
+
+<video id="video" width="480" height="360" autoplay></video>
+<canvas id="canvas" width="480" height="360"></canvas>
+
+<div id="info">
+  <p><b>IP:</b> 192.168.43.21</p>
+  <p><b>Location:</b> NCR Node 📍</p>
+  <p><b>Emotion:</b> <span id="emotion">Detecting...</span></p>
+</div>
+
+<div id="log"></div>
+
+<script>
+const logBox = document.getElementById("log");
+const progressBar = document.getElementById("progress");
+
+function log(msg) {
+  logBox.innerHTML += ">> " + msg + "<br>";
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+/* Emotion simulation */
+const emotions = ["Happy 😄", "Neutral 😐", "Suspicious 😶", "Angry 😠"];
+setInterval(() => {
+  document.getElementById("emotion").innerText =
+    emotions[Math.floor(Math.random()*emotions.length)];
+}, 1500);
+
+/* Logs */
+const logs = [
+  "Initializing neural network...",
+  "Loading facial recognition model...",
+  "Accessing camera feed...",
+  "Mapping 68 facial landmarks...",
+  "Analyzing micro-expressions...",
+  "Connecting to secure server...",
+  "Uploading biometric signature...",
+  "⚠️ Identity match found...",
+  "⚠️ Sending data to central server..."
+];
+
+let i = 0;
+function runLogs() {
+  if (i < logs.length) {
+    log(logs[i]);
+    progressBar.style.width = (i+1)*10 + "%";
+    i++;
+    setTimeout(runLogs, 1200);
+  } else {
+    prankEnd();
+  }
+}
+
+/* Camera */
+const video = document.getElementById("video");
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => video.srcObject = stream)
+.catch(() => log("Camera access denied"));
+
+/* Fake face box */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+function drawBox() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  let x = 100 + Math.random()*120;
+  let y = 60 + Math.random()*120;
+
+  ctx.strokeStyle = "#00ff00";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x, y, 150, 150);
+
+  requestAnimationFrame(drawBox);
+}
+drawBox();
+
+/* Final prank */
+function prankEnd() {
+  document.body.innerHTML = `
+    <div style="text-align:center; margin-top:100px;">
+      <h1 style="font-size:60px;">🤡 APRIL FOOLS 🤡</h1>
+      <p style="font-size:22px;">Relax... no data was uploaded 😆</p>
+      <p style="font-size:16px;">(or was it? 😈)</p>
+    </div>
+  `;
+}
+
+/* Start */
+runLogs();
+
+</script>
+
+</body>
+</html>
