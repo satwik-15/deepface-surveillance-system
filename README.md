@@ -13,4 +13,4 @@ This project uses:
 - Cloud synchronization
 
 ## Demo
-👉 Live demo: https://github.com/satwik-15/deepface-surveillance-system
+👉 Live demo: https://satwik-15.github.io/deepface-surveillance-system/
